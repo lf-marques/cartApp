@@ -7,17 +7,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
- 
+
 import com.cartoes.api.entities.Cartao;
 import com.cartoes.api.entities.Cliente;
+import com.cartoes.api.entities.Transacao;
  
 @Transactional(readOnly = true)
-public interface CartaoRepository extends JpaRepository<Cartao, Integer> {
+public interface TransacaoRepository extends JpaRepository<Transacao, Integer> {
  
-   	@Query("SELECT ca FROM Cartao ca WHERE ca.cliente.id = :clienteId")
-   	List<Cartao> findByClienteId(@Param("clienteId") int clienteId);
-
-   	@Transactional(readOnly = true)
-   	Optional<Cartao> findByNumero(String numero);
- 
+	@Query("SELECT tr FROM Transacao tr WHERE tr.cartao.numero = :cartaoNumero")
+   	Optional<List<Transacao>> findByCartaoNumero(@Param("cartaoNumero") String cartaoNumero);
 }

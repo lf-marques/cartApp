@@ -7,8 +7,10 @@ import java.util.List;
  
 import com.cartoes.api.dtos.CartaoDto;
 import com.cartoes.api.dtos.ClienteDto;
+import com.cartoes.api.dtos.TransacaoDto;
 import com.cartoes.api.entities.Cartao;
 import com.cartoes.api.entities.Cliente;
+import com.cartoes.api.entities.Transacao;
  
 public class ConversaoUtils {
  
@@ -57,6 +59,18 @@ public class ConversaoUtils {
          	return lst;
          	
    	}
+   	
+   	public static List<TransacaoDto> ConverterListaTransacao(List<Transacao> lista){
+         	
+         	List<TransacaoDto> lst = new ArrayList<TransacaoDto>(lista.size());
+         	
+         	for (Transacao transacao : lista) {
+                	lst.add(Converter(transacao));
+         	}
+         	
+         	return lst;
+         	
+   	}
  
    	public static Cliente Converter(ClienteDto clienteDto) {
  
@@ -70,6 +84,38 @@ public class ConversaoUtils {
          	cliente.setUf(clienteDto.getUf());
  
          	return cliente;
+ 
+   	}
+    
+   	public static Transacao Converter(TransacaoDto transacaoDto) {
+ 
+         	Transacao transacao = new Transacao();
+ 
+         	if (transacaoDto.getId() != null && transacaoDto.getId() != "")
+         		transacao.setId(Integer.parseInt(transacaoDto.getId()));
+ 
+         	transacao.setJuros(Double.parseDouble(transacaoDto.getJuros()));
+         	transacao.setQtdParcelas(Integer.parseInt(transacaoDto.getQtdParcelas()));
+         	transacao.setValor(Double.parseDouble(transacaoDto.getValor()));
+         	transacao.setCnpj(transacaoDto.getCnpj());
+         	transacao.setCartao(transacaoDto.getCartao());
+ 
+         	return transacao;
+ 
+   	}
+ 
+   	public static TransacaoDto Converter(Transacao transacao) {
+ 
+   		TransacaoDto transacaoDto = new TransacaoDto();
+   	 
+     	transacaoDto.setId(String.valueOf(transacao.getId()));
+     	transacaoDto.setJuros(String.valueOf(transacao.getJuros()));
+     	transacaoDto.setQtdParcelas(String.valueOf(transacao.getQtdParcelas()));
+     	transacaoDto.setValor(String.valueOf(transacao.getValor()));
+     	transacaoDto.setCartao(transacao.getCartao());
+     	transacaoDto.setCnpj(transacao.getCnpj());
+     	
+     	return transacaoDto;
  
    	}
    	

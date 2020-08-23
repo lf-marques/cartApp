@@ -33,7 +33,7 @@ public class CartaoService {
  
          	if (!cartao.isPresent()) {
  
-                	log.info("Service: Nenhuma cartão com id: {} foi encontrado", id);
+                	log.info("Service: Nenhum cartão com id: {} foi encontrado", id);
                 	throw new ConsistenciaException("Nenhuma cartão com id: {} foi encontrado", id);
  
          	}
@@ -41,6 +41,23 @@ public class CartaoService {
          	return cartao;
  
    	}
+   	
+   	public Optional<Cartao> buscarPorNumero(String numero) throws ConsistenciaException {
+   	 
+     	log.info("Service: buscando o cartão de número: {}", numero);
+
+     	Optional<Cartao> cartao = cartaoRepository.findByNumero(numero);
+
+     	if (!cartao.isPresent()) {
+
+            	log.info("Service: Nenhuma cartão de número: {} foi encontrado", numero);
+            	throw new ConsistenciaException("Nenhuma cartão com id: {} foi encontrado", numero);
+
+     	}
+
+     	return cartao;
+
+	}
  
    	public Optional<List<Cartao>> buscarPorClienteId(int clienteId) throws ConsistenciaException {
  
