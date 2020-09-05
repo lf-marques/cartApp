@@ -90,6 +90,7 @@ public class ConversaoUtils {
    	public static Transacao Converter(TransacaoDto transacaoDto) {
  
          	Transacao transacao = new Transacao();
+         	Cartao cartao = new Cartao();
  
          	if (transacaoDto.getId() != null && transacaoDto.getId() != "")
          		transacao.setId(Integer.parseInt(transacaoDto.getId()));
@@ -98,7 +99,8 @@ public class ConversaoUtils {
          	transacao.setQtdParcelas(Integer.parseInt(transacaoDto.getQtdParcelas()));
          	transacao.setValor(Double.parseDouble(transacaoDto.getValor()));
          	transacao.setCnpj(transacaoDto.getCnpj());
-         	transacao.setCartao(transacaoDto.getCartao());
+         	cartao.setNumero(transacaoDto.getNumeroCartao());
+         	transacao.setCartao(cartao);
  
          	return transacao;
  
@@ -112,7 +114,7 @@ public class ConversaoUtils {
      	transacaoDto.setJuros(String.valueOf(transacao.getJuros()));
      	transacaoDto.setQtdParcelas(String.valueOf(transacao.getQtdParcelas()));
      	transacaoDto.setValor(String.valueOf(transacao.getValor()));
-     	transacaoDto.setCartao(transacao.getCartao());
+     	transacaoDto.setNumeroCartao(transacao.getCartao().getNumero());
      	transacaoDto.setCnpj(transacao.getCnpj());
      	
      	return transacaoDto;

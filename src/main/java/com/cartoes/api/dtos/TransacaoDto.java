@@ -2,6 +2,9 @@ package com.cartoes.api.dtos;
  
 import javax.validation.constraints.NotEmpty;
 
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.br.CNPJ;
+
 import com.cartoes.api.entities.Cartao;
 import com.fasterxml.jackson.annotation.JsonProperty;
  
@@ -9,21 +12,30 @@ public class TransacaoDto {
  
    	private String id;
    	
-   	@NotEmpty(message = "Cnpj não pode ser vazio.")
+   	@NotEmpty(message = "CNPJ não pode ser vazio.")
+	@Length(min = 14, max = 14,
+   	message = "CNPJ precisa conter 14 caracteres.")
+	@CNPJ( message = "CNPJ inválido.")
    	private String cnpj;
    	
    	@NotEmpty(message = "Valor não pode ser vazio.")
+   	@Length(min = 1, max = 10,
+   	message = "Valor precisa ser preenchido com no máximo 10 caracteres númericos.")
    	private String valor;
    	
    	@NotEmpty(message = "qtdParcelas não pode ser vazio.")
+   	@Length(min = 0, max = 2,
+   	message = "qtdParcelas precisa ser preenchido com no máximo 2 caracteres númericos")
    	private String qtdParcelas;
    	
    	@NotEmpty(message = "Juros não pode ser vazio.")
+   	@Length(min = 0, max = 4,
+   	message = "juros precisa ser preenchido com no máximo 4 caracteres númericos")
    	private String juros;
 
    	@JsonProperty("cartao")
    	//@NotEmpty(message = "O número do cartão não pode ser vazio.")
-   	private Cartao cartao;
+   	private String numeroCartao;
    	
    	public String getId() {
      	return id;
@@ -65,12 +77,12 @@ public class TransacaoDto {
      	this.qtdParcelas = qtdParcelas;
    	}
    	
-   	public Cartao getCartao() {
-     	return cartao;
+   	public String getNumeroCartao() {
+     	return numeroCartao;
    	}
    	
-   	public void setCartao(Cartao cartao) {
-     	this.cartao= cartao;
+   	public void setNumeroCartao(String numeroCartao) {
+     	this.numeroCartao = numeroCartao;
    	}
          	
    	@Override
@@ -80,7 +92,7 @@ public class TransacaoDto {
                	+ "valor=" + valor + ","
                 + "qtdParcelas=" + qtdParcelas + ","
                	+ "juros=" + juros + ","
-               	+ "numero=" + cartao.getNumero() + "]";
+               	+ "numero=" + numeroCartao + "]";
    	}
  
 }
