@@ -37,8 +37,8 @@ public class TransacaoService {
          	log.info("Service: buscando as transações do cartão: {}", cartaoNumero);
  
          	Optional<List<Transacao>> transacoes = transacaoRepository.findByCartaoNumero(cartaoNumero);
- 
-         	if (!transacoes.isPresent() || transacoes.get().size() < 1) {
+         	
+         	if (transacoes == null || !transacoes.isPresent() || transacoes.get().size() < 1) {
  
                 	log.info("Service: Nenhuma transação do cartão: {} foi encontrado", cartaoNumero);
                 	throw new ConsistenciaException("Nenhuma transação do cartão: {} foi encontrado", cartaoNumero);
