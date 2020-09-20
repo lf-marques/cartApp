@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.cartoes.api.entities.Regra;
@@ -168,6 +169,29 @@ public class UsuarioService {
 
 		usuarioRepository.alterarSenhaUsuario(SenhaUtils.gerarHash(novaSenha), id);
 
+	}
+	
+	public void atualizarUltimoAcesso(String cpf) throws ConsistenciaException {
+		log.info("Service: atualizando ultimo acesso do usuário: {}", cpf);
+		
+		Optional<Usuario> usr = usuarioRepository.findByCpf(cpf);
+
+		if (!usr.isPresent()) {
+			log.info("Service: Nenhum usuário de cpf {} foi encontrado.", cpf);
+			throw new ConsistenciaException("Nenhum usuário encontrado.");
+		}
+		
+		try {
+			usuarioRepository.atualizarUltimoAcessoUsuario(cpf);	
+		} catch(Exception e) {
+			throw new ConsistenciaException("Não foi possíve atualizar o ultimo acesso do usuário.");
+		}
+	}
+	
+	@Scheduled(cron="0 3 * * * ?")
+	public void bloquearUsuarios() {
+		log.info("Cron bloquearUsuarios em execução...");
+		usuarioRepository.desativarUsuarios();
 	}
 
 }

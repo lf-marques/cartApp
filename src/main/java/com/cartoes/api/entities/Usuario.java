@@ -1,6 +1,7 @@
 package com.cartoes.api.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -41,7 +42,11 @@ public class Usuario implements Serializable {
 	@JoinTable(name = "Usuario_Regra", joinColumns = { @JoinColumn(name = "usuario_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "regra_id") })
 	private List<Regra> regras;
+	
+	@Column(name = "ultimo_Acesso", nullable = true)
+	private Date ultimoAcesso;
 
+	
 	public int getId() {
 		return id;
 	}
@@ -88,6 +93,14 @@ public class Usuario implements Serializable {
 
 	public void setRegras(List<Regra> regras) {
 		this.regras = regras;
+	}
+	
+	public void setUltimoAcesso(Date data) {
+		this.ultimoAcesso = data;
+	}
+	
+	public Date getUltimoAcesso() {
+		return ultimoAcesso;
 	}
 
 	@Override
