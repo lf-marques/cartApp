@@ -64,12 +64,8 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 				SecurityContextHolder.getContext().setAuthentication(authentication);
 
 			}
-			
-			try {
-				usuarioService.atualizarUltimoAcesso(username);
-			} catch (Exception e) {
-				//Log.error("Controller: Ocorreu um erro na aplicação: {}", e.getMessage())
-			}
+		
+			usuarioService.atualizarUltimoAcesso(username);
 
 		}
 
